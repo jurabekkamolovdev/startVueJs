@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <div class="card">
+            <h1>{{ title }}</h1>
+            <div class="form-control">
+                <input type="text" 
+                    v-bind:placeholder="placeholder"
+                    v-bind:value="inputValue"
+                    v-on:input="inputChangeHandler">
+            </div>
+            <h2>You message: {{ inputValue }}</h2>
+            <button class="submit" v-on:click="addHandler">Submit</button>
+        </div>
+        
+        <ul class="list">
+            <li class="list_item" v-for="note in notes">
+                <h2>{{ note }}</h2>
+            </li>
+        </ul>
+
+        <!-- <div class="card">
+            <h1>Enumerator: {{ counter }}</h1>
+            <div>
+                <button class="btn btn_primary" v-on:click="counter++">+</button>
+                <button class="btn btn_danger" v-on:click="counter--">-</button>
+            </div>
+        </div> -->
+    </div>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

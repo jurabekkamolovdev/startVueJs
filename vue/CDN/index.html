@@ -13,9 +13,11 @@
             <h1>{{ title }}</h1>
             <div class="form-control">
                 <input type="text" 
-                    v-bind:placeholder="placeholder"
-                    v-bind:value="inputValue"
-                    v-on:input="inputChangeHandler">
+                    :placeholder="placeholder"
+                    :value="inputValue"
+                    @:input="inputChangeHandler"
+                    v-on:keypress="keypressHandler"
+                    v-on:keypress.enter="addHandler">
             </div>
             <h2>You message: {{ inputValue }}</h2>
             <div class="buttons">
@@ -25,12 +27,20 @@
 
         </div>
         
-        <ul class="list">
+        <ul class="list" v-if="notes.length !== 0">
             <li class="list_item" v-for="(note, index) in notes">
-                <h2>{{ note }}</h2>
-                <button type="button" v-on:click="deleteHandler(index)">Click</button>
+                <h2>{{ toUpperCase(note) }}</h2>
+                <button type="button" @:click="deleteHandler(index)">Click</button>
+            </li>
+            <li>
+                <strong>Notes {{ notes.length }}</strong> | DoubleCount {{ doubleCount }}
+                <!-- <strong>Notes {{ notes.length }}</strong> | DoubleCount {{ doubleCount() }} -->
             </li>
         </ul>
+
+        <div v-else>
+            <h2>Heshnarsa yoq toldir</h2>
+        </div>
 
         <!-- <div class="card">
             <h1>Enumerator: {{ counter }}</h1>

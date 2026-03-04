@@ -279,6 +279,335 @@ Agar yangi element qo'shilsa (masalan: "3-Task")
 
 ---
 
+## 🔢 8. `v-for` bilan Index (Tartib Raqam) Olish
+
+```html
+<!-- index.html -->
+<li v-for="(note, index) in notes">
+    <h2>{{ toUpperCase(note) }}</h2>
+    <button @click="deleteHandler(index)">Click</button>
+</li>
+```
+
+### Nima qiladi?
+Massivni aylanayotganda har bir elementning **tartib raqamini** (0 dan boshlab) ham olish imkonini beradi.
+
+### Nima uchun kerak?
+Ba'zan elementning o'zidan tashqari, uning **qaysi o'rinda turganini** ham bilish kerak bo'ladi. Masalan, ro'yxatdan ma'lum bir elementni o'chirish uchun uning **index** ini bilish shart — aynan qaysi birini o'chirish kerakligini Vue ga ko'rsatish uchun.
+
+### Qanday ishlaydi?
+```
+notes = ['1-Task', '2-Task', '3-Task']
+    ↓
+v-for="(note, index) in notes"
+    ↓
+1-aylanish: note = "1-Task", index = 0
+2-aylanish: note = "2-Task", index = 1
+3-aylanish: note = "3-Task", index = 2
+    ↓
+Har bir <li> da o'chirish tugmasi bor: deleteHandler(index)
+Tugma bosilsa → o'sha index dagi element o'chiriladi
+```
+
+---
+
+## 🔤 9. `{{ }}` Ichida Funksiya Chaqirish
+
+```html
+<!-- index.html -->
+<h2>{{ toUpperCase(note) }}</h2>
+```
+
+```javascript
+// app.js — methods ichida
+toUpperCase(item) {
+    return item.toUpperCase();
+}
+```
+
+### Nima qiladi?
+`{{ }}` (interpolation) ichida faqat o'zgaruvchi emas, balki **funksiya ham** chaqirish mumkin. Funksiya qaytargan natija ekranda ko'rsatiladi.
+
+### Nima uchun kerak?
+Ma'lumotni ekranga chiqarishdan oldin **qayta ishlash** kerak bo'lganda juda foydali. Masalan, matnni katta harflarga o'zgartirish, sanani formatlash, raqamlarni yaxlitlash — bularning barchasi shu usulda qilinadi.
+
+### Qanday ishlaydi?
+```
+note = "1-Task"
+    ↓
+{{ toUpperCase(note) }}
+    ↓
+toUpperCase("1-Task") chaqiriladi
+    ↓
+"1-TASK" qaytariladi
+    ↓
+Ekranda "1-TASK" ko'rinadi
+```
+
+---
+
+## 🆕 10. Yangi Metodlar — `popHandler`, `deleteHandler`, `keypressHandler`
+
+### `popHandler()` — Oxirgi elementni o'chirish
+```javascript
+popHandler() {
+    this.notes.pop();
+}
+```
+- **Nima qiladi?** `notes` massivining eng **oxirgi** elementini o'chirib tashlaydi.
+- **Nima uchun `pop()`?** JavaScript dagi `.pop()` metodi massivning oxirgi elementini olib tashlaydi. Bu oddiy va tez usul — "Delete" tugmasi bosilganda oxirgi qo'shilgan xabarni o'chirish uchun ishlatilgan.
+
+### `deleteHandler(index)` — Ma'lum bir elementni o'chirish
+```javascript
+deleteHandler(index) {
+    this.notes.splice(index, 1);
+}
+```
+- **Nima qiladi?** Berilgan `index` (tartib raqam) bo'yicha **aniq bitta** elementni ro'yxatdan o'chiradi.
+- **Nima uchun `splice()`?** JavaScript dagi `.splice(index, 1)` metodi massivning istalgan o'rnidan element olib tashlash imkonini beradi. `index` — qaysi o'rindan, `1` — nechtasini o'chirish kerak.
+
+### Farqi nima?
+| Metod | Nimani o'chiradi | Misol |
+|-------|-----------------|-------|
+| `pop()` | Faqat **oxirgi** elementni | `['A', 'B', 'C']` → `['A', 'B']` |
+| `splice(1, 1)` | **Tanlangan** elementni (index=1) | `['A', 'B', 'C']` → `['A', 'C']` |
+
+### `keypressHandler(event)` — Klaviatura hodisasini ushlash
+```javascript
+keypressHandler(event) {
+    if (event.key === 'Enter') {
+        this.addHandler();
+    }
+}
+```
+- **Nima qiladi?** Foydalanuvchi klaviaturada tugma bosganda, **qaysi tugma** bosilganini tekshiradi. Agar `Enter` bo'lsa — `addHandler()` ni chaqirib, xabarni ro'yxatga qo'shadi.
+- **Nima uchun kerak?** Foydalanuvchi har safar sichqoncha bilan "Submit" tugmasini bosishi shart emas — `Enter` bosib ham jo'natish mumkin bo'ladi. Bu **qulay foydalanuvchi tajribasi** (UX) uchun juda muhim.
+
+---
+
+## ⌨️ 11. Hodisa Modifikatorlari — `.enter`, `.prevent` va boshqalar
+
+```html
+<!-- index.html -->
+<input v-on:keypress.enter="addHandler">
+```
+
+### Nima qiladi?
+`v-on:keypress.enter` — faqat **Enter** tugmasi bosilgandagina funksiyani ishga tushiradi. Boshqa tugmalar bosilganda hech narsa qilmaydi.
+
+### Nima uchun kerak?
+Yuqoridagi `keypressHandler` da biz qo'lda `if (event.key === 'Enter')` deb tekshirdik. Lekin Vue **modifikator** orqali buni juda qisqa va oson qilish imkonini beradi. Ya'ni bir xil natija — lekin **kamroq kod** bilan.
+
+### Taqqoslash:
+```javascript
+// ❌ Uzun usul — methods da qo'lda tekshirish
+keypressHandler(event) {
+    if (event.key === 'Enter') {
+        this.addHandler();
+    }
+}
+```
+```html
+<!-- ✅ Qisqa usul — modifikator bilan -->
+<input v-on:keypress.enter="addHandler">
+```
+
+### Boshqa foydali modifikatorlar:
+| Modifikator | Vazifasi |
+|-------------|----------|
+| `.enter` | Faqat Enter bosilganda |
+| `.tab` | Faqat Tab bosilganda |
+| `.esc` | Faqat Esc bosilganda |
+| `.prevent` | `event.preventDefault()` ni avtomatik chaqiradi (forma yuborilishini to'xtatish uchun) |
+| `.stop` | `event.stopPropagation()` — hodisaning yuqoriga tarqalishini to'xtatadi |
+
+---
+
+## 👁️ 12. Shartli Ko'rsatish — `v-if` / `v-else`
+
+```html
+<!-- index.html -->
+<ul v-if="notes.length !== 0">
+    <!-- Ro'yxat elementlari -->
+</ul>
+
+<div v-else>
+    <h2>Heshnarsa yoq toldir</h2>
+</div>
+```
+
+### Nima qiladi?
+- **`v-if`** — berilgan shart **to'g'ri** (`true`) bo'lsa, elementni ekranda **ko'rsatadi**.
+- **`v-else`** — `v-if` sharti **noto'g'ri** (`false`) bo'lsa, o'rniga boshqa elementni **ko'rsatadi**.
+
+### Nima uchun kerak?
+Ko'pincha ma'lum bir holatlarda turli xil narsalarni ko'rsatish kerak bo'ladi. Masalan:
+- Ro'yxat **bo'sh** bo'lsa → "Hech narsa yo'q" degan xabar chiqarish
+- Ro'yxatda **elementlar bor** bo'lsa → ro'yxatni ko'rsatish
+
+### Qanday ishlaydi?
+```
+notes = ['1-Task', '2-Task']  →  notes.length = 2  →  2 !== 0 = TRUE
+    ↓
+v-if="notes.length !== 0"  →  SHART TO'G'RI
+    ↓
+<ul> ro'yxati ko'rinadi ✅
+<div v-else> YASHIRINADI ❌
+```
+```
+notes = []  →  notes.length = 0  →  0 !== 0 = FALSE
+    ↓
+v-if="notes.length !== 0"  →  SHART NOTO'G'RI
+    ↓
+<ul> ro'yxati YASHIRINADI ❌
+<div v-else> ko'rinadi ✅  →  "Heshnarsa yoq toldir"
+```
+
+### Muhim farq — `v-if` vs `v-show`:
+| Xususiyat | `v-if` | `v-show` |
+|-----------|--------|----------|
+| Qanday ishlaydi | Elementni DOM dan **butunlay olib tashlaydi** | Elementni `display: none` bilan **yashiradi** |
+| Qachon ishlatiladi | Kam o'zgaradigan shartlar uchun | Tez-tez ko'rinib/yashirinadigan elementlar uchun |
+
+---
+
+## 🧠 13. Hisoblangan Xususiyatlar — `computed`
+
+```javascript
+// app.js
+computed: {
+    doubleCount() {
+        console.log('dCount');
+        return this.notes.length * 2
+    }
+}
+```
+
+```html
+<!-- index.html -->
+<strong>Notes {{ notes.length }}</strong> | DoubleCount {{ doubleCount }}
+```
+
+### Nima qiladi?
+`data()` dagi ma'lumotlar asosida yangi qiymat **hisoblaydi** va uni ekranda ko'rsatish imkonini beradi.
+
+### Nima uchun kerak?
+Masalan, `notes` massivida 3 ta element bor — `doubleCount` avtomatik `6` ni ko'rsatadi. Element qo'shilsa yoki o'chirilsa, qiymat **o'zi yangilanadi**.
+
+### `methods` dagi oddiy funksiya bilan farqi nima?
+
+Bu juda **muhim** savol! Ikkalasi ham bir xil natija beradi, lekin **ishlash tarzi** boshqacha:
+
+```javascript
+// ❌ methods da yozilgan variant
+methods: {
+    doubleCount() {
+        console.log('dCount');
+        return this.notes.length * 2
+    }
+}
+// HTML da: {{ doubleCount() }} — qavslar bilan chaqiriladi
+```
+
+```javascript
+// ✅ computed da yozilgan variant
+computed: {
+    doubleCount() {
+        console.log('dCount');
+        return this.notes.length * 2
+    }
+}
+// HTML da: {{ doubleCount }} — qavslarsiz, o'zgaruvchi kabi ishlatiladi
+```
+
+### Asosiy farq — **Keshlash (Caching)**:
+
+| Xususiyat | `methods` | `computed` |
+|-----------|-----------|------------|
+| Chaqirilishi | Har safar sahifa qayta chizilganda **qayta ishga tushadi** | Faqat bog'liq ma'lumot o'zgargandagina **qayta hisoblanadi** |
+| Keshlash | ❌ Yo'q — har doim qaytadan ishlaydi | ✅ Bor — natija keshlanadi, tezroq ishlaydi |
+| Yozilishi | `{{ doubleCount() }}` qavslar bilan | `{{ doubleCount }}` qavslarsiz |
+
+### Qanday ishlaydi?
+```
+notes = ['1-Task', '2-Task']  →  notes.length = 2
+    ↓
+computed: doubleCount → 2 * 2 = 4 (hisoblab, KESHLADI)
+    ↓
+Ekranda: "DoubleCount 4"
+    ↓
+Agar title o'zgarsa (notes O'ZGARMADI)
+    ↓
+doubleCount QAYTA ISHLAMAYDI — keshdan oladi (tezkor!)
+    ↓
+Agar notes ga yangi element qo'shilsa (notes O'ZGARDI)
+    ↓
+doubleCount QAYTA HISOBLANADI → 3 * 2 = 6
+```
+
+> 💡 **Qoida:** Agar funksiya faqat `data()` dagi ma'lumotlar asosida hisoblanadigan qiymat qaytarsa — **computed** ishlating. Bu tezroq va samaraliroq ishlaydi.
+
+---
+
+## 👀 14. Kuzatuvchi — `watch`
+
+```javascript
+// app.js
+watch: {
+    inputValue(value) {
+        console.log('Watch', value)
+    }
+}
+```
+
+### Nima qiladi?
+`data()` ichidagi biror o'zgaruvchini **kuzatadi** — u o'zgarganda **avtomatik** ishga tushadigan funksiya.
+
+### Nima uchun kerak?
+Ba'zan o'zgaruvchi o'zgarganda **qo'shimcha harakat** bajarish kerak bo'ladi. Masalan:
+- Foydalanuvchi yozayotgan matnni **konsolga chiqarish** (debug uchun)
+- Qidiruv so'zi o'zgarganda **API ga so'rov jo'natish**
+- Ma'lum bir qiymatga yetganda **ogohlantirish** ko'rsatish
+- Ma'lumotni **localStorage** ga saqlash
+
+### Qanday ishlaydi?
+```
+Foydalanuvchi inputga "S" yozdi
+    ↓
+inputValue = "S" bo'ldi (data o'zgardi)
+    ↓
+watch: inputValue() avtomatik ishga tushdi
+    ↓
+Konsolda: "Watch S" chiqdi
+    ↓
+Foydalanuvchi "a" qo'shdi → inputValue = "Sa"
+    ↓
+watch yana ishga tushdi → Konsolda: "Watch Sa"
+```
+
+### `watch` funksiyasining parametrlari:
+```javascript
+watch: {
+    inputValue(yangiQiymat, eskiQiymat) {
+        console.log('Eski:', eskiQiymat)
+        console.log('Yangi:', yangiQiymat)
+    }
+}
+```
+- **1-parametr** — o'zgaruvchining **yangi** qiymati
+- **2-parametr** — o'zgaruvchining **eski** (avvalgi) qiymati
+
+### `watch` vs `computed` — farqi nima?
+
+| Xususiyat | `computed` | `watch` |
+|-----------|------------|---------|
+| Vazifasi | Yangi **qiymat hisoblash** va qaytarish | O'zgarishga **javoban harakat** qilish |
+| Ishlash tarzi | return bilan natija qaytaradi | Hech narsa qaytarmaydi, faqat yon effekt bajaradi |
+| Misol | `doubleCount → notes.length * 2` | `inputValue o'zgardi → konsolga yozish` |
+| Qachon ishlatiladi | Ma'lumotni **qayta ishlash** kerak bo'lganda | Ma'lumot o'zgarganda **biror amalni bajarish** kerak bo'lganda |
+
+---
+
 ## 🔁 Umumiy Ishlash Jarayoni
 
 Quyida dasturning boshidan oxirigacha qanday ishlashi ko'rsatilgan:
@@ -292,28 +621,38 @@ Quyida dasturning boshidan oxirigacha qanday ishlashi ko'rsatilgan:
     ↓
 4. data() ishga tushdi — title, inputValue, notes tayyor
     ↓
-5. Ekranda:
+5. computed hisoblanadi — doubleCount = 4
+    ↓
+6. Ekranda:
    - {{ title }}         → "Message" ko'rinadi
    - v-bind:placeholder  → inputda "Habar yozing" ko'rinadi
-   - v-for               → "1-Task", "2-Task" ro'yxati chiqdi
+   - v-if                → notes.length !== 0 → ro'yxat ko'rinadi
+   - v-for               → "1-TASK", "2-TASK" (toUpperCase bilan)
+   - doubleCount          → "4" ko'rinadi
     ↓
-6. Foydalanuvchi input ga "Salom" deb yozdi
+7. Foydalanuvchi input ga "Salom" deb yozdi
     ↓
-7. v-on:input → inputChangeHandler() ishladi
+8. v-on:input → inputChangeHandler() ishladi
     ↓
-8. inputValue = "Salom" bo'ldi
+9. inputValue = "Salom" bo'ldi
     ↓
-9. {{ inputValue }} → ekranda "You message: Salom" ko'rindi
+10. watch ishga tushdi → konsolda "Watch Salom" chiqdi
     ↓
-10. Foydalanuvchi "Submit" tugmasini bosdi
+11. {{ inputValue }} → ekranda "You message: Salom" ko'rindi
     ↓
-11. v-on:click → addHandler() ishladi
+12. Foydalanuvchi Enter bosdi YOKI "Submit" tugmasini bosdi
     ↓
-12. notes = ['1-Task', '2-Task', 'Salom'] bo'ldi
+13. addHandler() ishladi → "Salom" ro'yxatga qo'shildi
     ↓
-13. v-for → yangi <li> avtomatik paydo bo'ldi
+14. v-for → yangi <li> paydo bo'ldi: "SALOM" (toUpperCase)
     ↓
-14. inputValue = '' — input maydonchasi tozalandi
+15. computed → doubleCount = 6 ga yangilandi
+    ↓
+16. Foydalanuvchi bitta element yonidagi tugmani bosdi
+    ↓
+17. deleteHandler(index) → o'sha element o'chirildi (splice)
+    ↓
+18. Agar hammasi o'chirilsa → v-if false → "Heshnarsa yoq toldir" chiqadi
 ```
 
 ---
@@ -327,7 +666,17 @@ Quyida dasturning boshidan oxirigacha qanday ishlashi ko'rsatilgan:
 | `data()` | `data() { return {...} }` | O'zgaruvchilarni saqlash (reaktiv) |
 | `methods` | `methods: { fn() {...} }` | Funksiyalarni e'lon qilish |
 | `{{ }}` | `{{ title }}` | Ma'lumotni ekranga chiqarish |
-| `v-bind` | `v-bind:attr="val"` yoki `:attr="val"` | Atributni o'zgaruvchiga ulash |
-| `v-on` | `v-on:event="fn"` yoki `@event="fn"` | Hodisani funksiyaga bog'lash |
+| `{{ fn() }}` | `{{ toUpperCase(note) }}` | Interpolation ichida funksiya chaqirish |
+| `v-bind` | `:attr="val"` | Atributni o'zgaruvchiga ulash |
+| `v-on` | `@event="fn"` | Hodisani funksiyaga bog'lash |
+| `.enter` | `@keypress.enter="fn"` | Hodisa modifikatori (faqat Enter) |
 | `v-for` | `v-for="item in list"` | Ro'yxat elementlarini yaratish |
+| `v-for` + index | `v-for="(item, i) in list"` | Ro'yxat + tartib raqam |
+| `v-if` | `v-if="shart"` | Shartli ko'rsatish |
+| `v-else` | `<div v-else>` | `v-if` noto'g'ri bo'lganda ko'rsatish |
+| `computed` | `computed: { fn() {...} }` | Keshlangan hisoblangan qiymat |
+| `watch` | `watch: { prop(val) {...} }` | O'zgarishni kuzatish va javoban harakat |
 | `this` | `this.inputValue` | Komponent ichidagi ma'lumotga murojaat |
+| `.push()` | `this.notes.push(val)` | Massivga element qo'shish |
+| `.pop()` | `this.notes.pop()` | Oxirgi elementni o'chirish |
+| `.splice()` | `this.notes.splice(i, 1)` | Ma'lum index dagi elementni o'chirish |

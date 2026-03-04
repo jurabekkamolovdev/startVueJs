@@ -15,8 +15,16 @@ const App = {
         },
 
         addHandler() {
-            this.notes.push(this.inputValue)
+            if (this.inputValue !== '') this.notes.push(this.inputValue)
             this.inputValue = ''
+        },
+
+        popHandler() {
+            this.notes.pop()
+        },
+        
+        deleteHandler(index) {
+            this.notes.splice(index, 1)
         }
     }
 }

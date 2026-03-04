@@ -18,12 +18,17 @@
                     v-on:input="inputChangeHandler">
             </div>
             <h2>You message: {{ inputValue }}</h2>
-            <button class="submit" v-on:click="addHandler">Submit</button>
+            <div class="buttons">
+                            <button class="submit" v-on:click="addHandler">Submit</button>
+            <button class="del" v-on:click="popHandler">Delete</button>
+            </div>
+
         </div>
         
         <ul class="list">
-            <li class="list_item" v-for="note in notes">
+            <li class="list_item" v-for="(note, index) in notes">
                 <h2>{{ note }}</h2>
+                <button type="button" v-on:click="deleteHandler(index)">Click</button>
             </li>
         </ul>
 

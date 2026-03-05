@@ -41,7 +41,7 @@ const App = {
         //     console.log('dCount');
         //     return this.notes.length * 2
         // }
-        
+
     },
 
     computed: {

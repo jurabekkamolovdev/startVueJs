@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" id="app">
+        <h1 v-text="title"></h1>
+
+        <input type="text" v-on:keyup.enter="addItem" ref="inputValue">
+
+        <ul>
+            <li
+                v-for="(item, index) in items"
+                v-on:click="items.splice(index, 1)"
+                v-bind:key="item"
+            >
+                <h2>{{ item }}</h2>&nbsp;
+                <input type="text" v-on:click.stop>
+            </li>
+        </ul>
+        <h2 v-show="!items.length">Items Yoq</h2>
+    </div>
+    
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

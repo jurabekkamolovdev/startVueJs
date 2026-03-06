@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #000;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 390px;
+    padding: 0 12px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* ── DISPLAY ── */
+.display {
+    width: 100%;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 10px 8px 18px;
+}
+
+.display h1 {
+    font-size: 88px;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 8px;
+    line-height: 1;
+    transition: font-size 0.15s ease;
+}
+
+/* Raqam uzun bo'lsa kichraytirish uchun */
+.display h1.small {
+    font-size: 52px;
+}
+
+/* ── BUTTONS ── */
+.buttons ul {
+    width: 100%;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding: 0;
+}
+
+.buttons ul li {
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 400;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.1s ease, transform 0.08s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.buttons ul li:active {
+    opacity: 0.6;
+    transform: scale(0.96);
+}
+
+/* ── 0 tugmasi — keng ── */
+.buttons ul li:nth-child(17) {
+    grid-column: span 2;
+    border-radius: 50px;
+    justify-content: flex-start;
+    padding-left: 32px;
+    aspect-ratio: unset;
+}
+
+/* ── RANGLAR ── */
+
+/* Tepagi funksional tugmalar: AC, +/-, % */
+.buttons ul li:nth-child(1),
+.buttons ul li:nth-child(2),
+.buttons ul li:nth-child(3) {
+    background-color: #a5a5a5;
+    color: #000;
+}
+
+/* Operator tugmalar: ÷, ×, −, +, = */
+.buttons ul li:nth-child(4),
+.buttons ul li:nth-child(8),
+.buttons ul li:nth-child(12),
+.buttons ul li:nth-child(16),
+.buttons ul li:nth-child(19) {
+    background-color: #ff9f0a;
+    color: #fff;
+}
+
+/* Sonlar va nuqta */
+.buttons ul li:nth-child(5),
+.buttons ul li:nth-child(6),
+.buttons ul li:nth-child(7),
+.buttons ul li:nth-child(9),
+.buttons ul li:nth-child(10),
+.buttons ul li:nth-child(11),
+.buttons ul li:nth-child(13),
+.buttons ul li:nth-child(14),
+.buttons ul li:nth-child(15),
+.buttons ul li:nth-child(17),
+.buttons ul li:nth-child(18) {
+    background-color: #333333;
+    color: #fff;
+}
+
+/* Operator aktiv holat (bosilganda sariq outline) */
+.buttons ul li:nth-child(4):active,
+.buttons ul li:nth-child(8):active,
+.buttons ul li:nth-child(12):active,
+.buttons ul li:nth-child(16):active,
+.buttons ul li:nth-child(19):active {
+    background-color: #fff;
+    color: #ff9f0a;
+    opacity: 1;
+}
+
+/* Funksional tugmalar hover */
+.buttons ul li:nth-child(1):hover,
+.buttons ul li:nth-child(2):hover,
+.buttons ul li:nth-child(3):hover {
+    background-color: #d4d4d2;
+}
+
+/* Son tugmalari hover */
+.buttons ul li:nth-child(n+5):not(:nth-child(4)):not(:nth-child(8)):not(:nth-child(12)):not(:nth-child(16)):not(:nth-child(19)):hover {
+    background-color: #4d4d4d;
+}

@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #003049;
+}
+
+.container {
+    width: 50%;
+    margin: 30px auto;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: aliceblue;
+}
+
+.card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn {
+    background-color: transparent;
+    width: 150px;
+    padding: 10px;
+    border: 2px solid #38b000;
+    border-radius: 10px;
+    color: #38b000;
+    font-size: 15px;
+}

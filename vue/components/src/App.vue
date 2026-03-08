@@ -2,15 +2,18 @@
   <div class="container">
     <div class="card">
       <h2>So'ngi yangiliklar {{ now }}</h2>
+      <h3>Ko'rilganlar soni: {{ count }}</h3>
     </div>
 
     <AppNews
       v-for="item in news"
       v-bind:key="item.id"
+      v-bind:id="item.id"
       v-bind:title="item.title"
       v-bind:desc="item.desc"
+      v-model:isOpen="isOpen"
+      v-on:news-open="openNews(item.id)"
     />
-
   </div>
 </template>
 
@@ -31,11 +34,18 @@ export default {
           title: 'Bugun xotin-qizlar bayrami',
           desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corporis consequuntur accusantium cumque veritatis distinctio porro.'
         }
-      ]
+      ],
+      count: 0
     }
   },
   components: {
     AppNews
+  },
+  methods: {
+    openNews(id) {
+      this.count++
+      console.log(id)
+    }
   }
 }
 </script>

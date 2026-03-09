@@ -27,6 +27,15 @@ export default {
     }
   },
 
+  emits: {
+    'news-open'(data) {
+      if (!data) {
+        return 0
+      }
+      return 1
+    }
+  },
+
   methods: {
     open() {
       this.isNewsOpen = !this.isNewsOpen

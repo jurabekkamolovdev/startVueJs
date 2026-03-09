@@ -32,7 +32,10 @@ body {
 
 .btn {
   width: 100px;
+  display: inline-block;
+  vertical-align: middle;
   padding: 10px;
+  display: inline;
   border: none;
   cursor: pointer;
   background-color: transparent;
@@ -50,4 +53,40 @@ body {
 
 .btn:active {
   background-color: #2d6a4f;
+}
+
+.btn-read {
+  width: 100px;
+  display: inline-block;
+  display: inline;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #52b788;
+  border: 1px solid #52b788;
+  color: white;
+  border-radius: 50px;
+  font-size: 15px;
+  transition: all 0.5s;
+}
+
+.btn-read:hover {
+  background-color: #2d6a4f;
+}
+
+.btn-danger {
+  width: 200px;
+  display: inline-block;
+  vertical-align: middle;
+  display: inline;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #c1121f;
+  border: 1px solid #c1121f;
+  color: white;
+  border-radius: 50px;
+  font-size: 15px;
+  transition: all 0.5s;
 }

@@ -32,7 +32,7 @@ export default {
       this.isNewsOpen = !this.isNewsOpen
       this.textBtn = 'Open'
       if (this.isNewsOpen) {
-        this.$emit('news-open')
+        this.$emit('news-open') // , data
         this.textBtn = 'Close'
       }
     }

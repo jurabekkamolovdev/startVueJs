@@ -1,10 +1,19 @@
 <template>
   <div class="card">
     <h2>{{ title }}</h2>
-    <AppButton
-      :color="'primary'"
-      @action="open"
-    > {{ openNews ? 'Close': 'Open' }} </AppButton>
+    <div class="btn-card">
+      <AppButton
+        :color="'primary'"
+        @action="open"
+      > {{ openNews ? 'Close': 'Open' }} </AppButton>
+      <AppButton
+        v-if="wasRead"
+        :color="'danger'"
+        @action="$emit('unmark')"
+      >
+        Bekor qilish
+      </AppButton>
+    </div>
     <div v-if="openNews">
       <p>{{ desc }}</p>
       <AppButton
@@ -51,6 +60,11 @@ export default {
     read() {
       this.open()
       this.$emit('read-news')
+    }
+  },
+  watch: {
+    isOpen(value) {
+      this.openNews = value
     }
   },
   components: {

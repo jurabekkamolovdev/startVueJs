@@ -2,7 +2,7 @@
   <div class="container">
     <div class="card">
       <h2>So'ngi yangiliklar</h2>
-      <h3>Yangiliklar ochilish soni: {{ openRate }}</h3>
+      <h3>Yangiliklar ochilish soni: {{ openRate }} | O'qilganlar soni: {{ readRate }}</h3>
     </div>
 
     <AppNews v-for="item in news"
@@ -13,6 +13,7 @@
       :was-read="item.wasRead"
       @open-news="open"
       @read-news="read(item.id)"
+      @unmark="unmark(item.id)"
     />
   </div>
 </template>
@@ -23,6 +24,7 @@ export default {
   data() {
     return {
       openRate: 0,
+      readRate: 0,
       news: [
         {
           id: 1,
@@ -48,7 +50,14 @@ export default {
     read(id) {
       const item = this.news.find(item => item.id === id)
       item.wasRead = true
-      console.log(id)
+      item.isOpen = false
+      this.readRate++
+    },
+    unmark(id) {
+      const item = this.news.find(item => item.id === id)
+      item.wasRead = false
+      item.isOpen = true
+      this.readRate--
     }
   },
   components: {

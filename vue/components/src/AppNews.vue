@@ -1,17 +1,31 @@
 <template>
   <div class="card">
     <h2>{{ title }}</h2>
-
-    <button class="btn" v-on:click="open">{{ textBtn }}</button>
-    <button class="btn-danger" v-if="wasRead" v-on:click="$emit('unmark', this.id)">O'qilganni olish</button>
+    <AppButton
+      color="primary"
+      v-bind:text="isNewsOpen ? 'Close' : 'Open'"
+      v-on:action="open"
+    />
+    <AppButton
+      v-if="wasRead"
+      color="danger"
+      text="O'qilganni o'chirish"
+      v-on:action="unmark"
+      />
     <div v-if="isNewsOpen">
       <p>{{ desc }}</p>
-      <button class="btn-read" v-if="!wasRead" v-on:click="mark">O'qish</button>
+      <!-- <button class="btn-read" v-if="!wasRead" v-on:click="mark">O'qish</button> -->
+      <AppButton
+        v-if="!wasRead"
+        text="Read"
+        v-on:action="mark"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import AppButton from './AppButton.vue'
 export default {
   emits: {
     'read-news'(id) {
@@ -20,6 +34,12 @@ export default {
       }
       console.warn('News da Id topilmadi')
       return false
+    },
+    'unmark'(id) {
+      return typeof id === 'number'
+    },
+    'open-news'() {
+      return true
     }
   },
   props: {
@@ -35,7 +55,6 @@ export default {
 
   data() {
     return {
-      textBtn: 'Open',
       isNewsOpen: this.isOpen
     }
   },
@@ -43,21 +62,22 @@ export default {
   methods: {
     open() {
       this.isNewsOpen = !this.isNewsOpen
-      this.textBtn = 'Open'
       if (this.isNewsOpen) {
         this.$emit('open-news')
-        this.textBtn = 'Close'
       }
     },
 
     mark() {
       this.open()
       this.$emit('read-news', this.id)
-    }
+    },
 
-    // unmark() {
-    //   this.$emit('unmark', this.id)
-    // }
+    unmark() {
+      this.$emit('unmark', this.id)
+    }
+  },
+  components: {
+    AppButton
   }
 }
 </script>

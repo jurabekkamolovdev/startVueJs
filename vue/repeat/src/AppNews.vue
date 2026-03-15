@@ -2,33 +2,26 @@
   <div class="card">
     <h2>{{ title }}</h2>
     <div class="btn-card">
-      <AppButton
-        :color="'primary'"
-        @action="open"
-      > {{ openNews ? 'Close': 'Open' }} </AppButton>
-      <AppButton
-        v-if="wasRead"
-        :color="'danger'"
-        @action="$emit('unmark')"
-      >
+      <AppButton :color="'primary'" @action="open">
+        {{ openNews ? 'Close' : 'Open' }}
+      </AppButton>
+      <AppButton v-if="wasRead" :color="'danger'" @action="$emit('unmark')">
         Bekor qilish
       </AppButton>
     </div>
     <div v-if="openNews">
       <p>{{ desc }}</p>
-      <AppButton
-        v-if="!wasRead"
-        :color="'primary'"
-        @action="read"
-      >
-      Read
+      <AppButton v-if="!wasRead" :color="'primary'" @action="read">
+        Read
       </AppButton>
+      <AppNewsList></AppNewsList>
     </div>
   </div>
 </template>
 
 <script>
 import AppButton from './AppButton.vue'
+import AppNewsList from './AppNewsList.vue'
 export default {
   emits: {
     'open-news': null
@@ -68,7 +61,8 @@ export default {
     }
   },
   components: {
-    AppButton
+    AppButton,
+    AppNewsList
   }
 }
 </script>

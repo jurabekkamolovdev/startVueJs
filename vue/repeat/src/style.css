@@ -34,14 +34,17 @@ body {
   padding: 10px;
   cursor: pointer;
   border: none;
+  background-color: transparent;
+  border: 1px solid #52b788;
+  color: #52b788;
   border-radius: 50px;
   font-size: 15px;
 }
 
 .btn.primary {
-  background-color: transparent;
+  background-color: #52b788;
   border: 1px solid #52b788;
-  color: #52b788;
+  color: white;
 }
 
 .btn.danger {

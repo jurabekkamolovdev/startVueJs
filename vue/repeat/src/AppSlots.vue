@@ -14,10 +14,9 @@
       </template>
 
       <template v-slot:footer>
-        <hr>
+        <hr />
         <h2>Footer</h2>
       </template>
-
     </AppBlock>
   </div>
 </template>

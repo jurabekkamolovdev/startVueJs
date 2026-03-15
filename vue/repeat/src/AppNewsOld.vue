@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style scoped>
-  h2 {
-    color: violet;
-  }
+h2 {
+  color: violet;
+}
 </style>

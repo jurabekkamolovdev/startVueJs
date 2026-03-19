@@ -1,0 +1,14 @@
+# .gitattributes
+# Hammasini LF bilan
+* text eol=lf
+
+# Vue, JS, TS, CSS, SCSS, JSON uchun LF majburiy
+*.vue text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.json text eol=lf
+
+# Boshqa fayllar uchun ham LF
+* text eol=lf

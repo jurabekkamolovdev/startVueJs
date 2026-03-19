@@ -14,7 +14,6 @@
       />
     <div v-if="isNewsOpen">
       <p>{{ desc }}</p>
-      <!-- <button class="btn-read" v-if="!wasRead" v-on:click="mark">O'qish</button> -->
       <AppButton
         v-if="!wasRead"
         text="Read"

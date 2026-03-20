@@ -1,15 +1,23 @@
 <template>
   <div class="container">
-    <form action="" class="card">
+    <form class="card" @submit.prevent="submitHandler">
       <h1>Anketa Vue uchun !</h1>
       <div class="form-control">
         <label for="name">Ismingizni nima ?</label>
-        <input type="text" id="name" placeholder="Ismingizni yozing">
+        <input
+          type="text"
+          id="name"
+          v-model.trim="name"
+          placeholder="Ismingizni yozing">
       </div>
 
       <div class="form-control">
         <label for="age">Yoshingiz nechida ?</label>
-        <input type="number" id="age" value="20">
+        <input
+          type="number"
+          id="age"
+          v-model="age"
+        >
       </div>
 
       <div class="form-control">
@@ -53,11 +61,26 @@
 
       </div>
 
-      <div type="submit" class="btn">Yuborish</div>
+      <button type="submit" class="btn">Yuborish</button>
     </form>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      name: '',
+      age: 23
+    }
+  },
+
+  methods: {
+    submitHandler() {
+      console.group('Form Data')
+      console.log('Name:', this.name)
+      console.groupEnd()
+    }
+  }
+}
 </script>

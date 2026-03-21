@@ -2,7 +2,7 @@
   <div class="container">
     <form class="card" @submit.prevent="submitHandler">
       <h1>Anketa Vue uchun !</h1>
-      <div class="form-control" :class="{invalid: errors.name}">
+      <!-- <div class="form-control" :class="{invalid: errors.name}">
         <label for="name">Ismingizni nima ?</label>
         <input
           type="text"
@@ -10,8 +10,13 @@
           v-model.trim="name"
           placeholder="Ismingizni yozing">
           <small v-if="errors.name">{{errors.name}}</small>
-      </div>
-
+      </div> -->
+      <AppInput
+        label="Ismingizni nima ?"
+        placeholder="Ismingizni yozing"
+        :error="errors.name"
+        v-model="name"
+      ></AppInput>
       <div class="form-control">
         <label for="age">Yoshingiz nechida ?</label>
         <input
@@ -78,6 +83,8 @@
 </template>
 
 <script>
+import AppInput from './AppInput.vue'
+
 export default {
   data() {
     return {
@@ -119,6 +126,10 @@ export default {
         console.groupEnd()
       }
     }
+  },
+
+  components: {
+    AppInput
   }
 }
 </script>

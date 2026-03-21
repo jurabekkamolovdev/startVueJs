@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1b263b;
+}
+
+.container {
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card.center {
+  align-items: center;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-control label {
+  color: #0d1b2a;
+  font-size: 20px;
+}
+
+.form-control input {
+  padding: 5px;
+  border: 1px solid #0d1b2a;
+  font-size: 20px;
+  color: #0d1b2a;
+}
+
+.form-control input:focus {
+  border: 1px solid #06d6a0;
+  outline: none;
+}
+
+.btn {
+  width: 200px;
+  padding: 10px;
+  /* display: inline-block; */
+  /* padding: 10px 20px; */
+  /* align-self: start; */
+  background-color: #40916c;
+  border: 1px solid #40916c;
+  color: white;
+  border-radius: 50px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn:disabled {
+  background-color: #ced4da;
+  border: 1px solid #e9ecef;
+  color: #adb5bd;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn.danger {
+  background-color: #c1121f;
+  border: 1px solid #c1121f;
+}
+
+.card.row {
+  flex-direction: row;
+  justify-content:space-between;
+  align-items: center;
+}

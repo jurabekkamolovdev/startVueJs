@@ -2,12 +2,12 @@
   <div class="form-control" :class="{ invalid: error }">
     <label :for="id">{{ label }}</label>
     <input
-      type="text"
+      :type="type"
       :id="id"
       :placeholder="placeholder"
       :value="modelValue"
       @input="change"
-    >
+    />
     <small v-if="error">{{ error }}</small>
   </div>
 </template>
@@ -17,10 +17,14 @@ export default {
   emits: ['update:modelValue'],
 
   props: {
+    type: String,
     label: String,
-    placeholder: String,
+    placeholder: {
+      type: String,
+      required: false
+    },
     error: String,
-    modelValue: String
+    modelValue: [String, Number]
   },
 
   data() {
@@ -38,12 +42,12 @@ export default {
 </script>
 
 <style scoped>
-  .form-control small {
-    font-size: 18px;
-    color: red;
-  }
+.form-control small {
+  font-size: 18px;
+  color: red;
+}
 
-  .form-control.invalid input {
-    border-color: red;
-  }
+.form-control.invalid input {
+  border-color: red;
+}
 </style>

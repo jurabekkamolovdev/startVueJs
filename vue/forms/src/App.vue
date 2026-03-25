@@ -2,29 +2,20 @@
   <div class="container">
     <form class="card" @submit.prevent="submitHandler">
       <h1>Anketa Vue uchun !</h1>
-      <!-- <div class="form-control" :class="{invalid: errors.name}">
-        <label for="name">Ismingizni nima ?</label>
-        <input
-          type="text"
-          id="name"
-          v-model.trim="name"
-          placeholder="Ismingizni yozing">
-          <small v-if="errors.name">{{errors.name}}</small>
-      </div> -->
       <AppInput
+        type="text"
         label="Ismingizni nima ?"
         placeholder="Ismingizni yozing"
         :error="errors.name"
-        v-model="name"
+        v-model.trim="name"
       ></AppInput>
-      <div class="form-control">
-        <label for="age">Yoshingiz nechida ?</label>
-        <input
-          type="number"
-          id="age"
-          v-model.number="age"
-        >
-      </div>
+
+      <AppInput
+        type="number"
+        label="Yoshingiz nechida ?"
+        :error="errors.age"
+        v-model.number="age"
+      ></AppInput>
 
       <div class="form-control">
         <label for="city">Qayerda yashaysiz ?</label>
@@ -39,12 +30,12 @@
         <label for="">Tokioga borishni hohlaysizmi ?</label>
 
         <label for="" class="radio">
-          <input type="radio" name="radio" value="yes" v-model="relocate">
+          <input type="radio" name="radio" value="yes" v-model="relocate" />
           <span></span>
           Ha
         </label>
         <label for="" class="radio">
-          <input type="radio" name="radio" value="no" v-model="relocate">
+          <input type="radio" name="radio" value="no" v-model="relocate" />
           <span></span>
           Yo'q
         </label>
@@ -54,27 +45,30 @@
         <label>Vue da nimalarni bilasiz ?</label>
 
         <label class="checkbox">
-          <input type="checkbox" name="skills" value="Vuex" v-model="skills">
+          <input type="checkbox" name="skills" value="Vuex" v-model="skills" />
           <span></span>
           Vuex
         </label>
 
         <label class="checkbox">
-          <input type="checkbox" name="skills" value="Vue Router" v-model="skills">
+          <input
+            type="checkbox"
+            name="skills"
+            value="Vue Router"
+            v-model="skills"
+          />
           <span></span>
           Vue Router
         </label>
-
       </div>
 
       <div class="form-control">
         <label>Bizning qoidalar bilan tanishdingizmi ?</label>
         <label class="checkbox">
-          <input type="checkbox" v-model="agree">
+          <input type="checkbox" v-model="agree" />
           <span></span>
           Qoidalar bilan tanishdim
         </label>
-
       </div>
 
       <button type="submit" class="btn">Yuborish</button>
@@ -95,7 +89,8 @@ export default {
       skills: [],
       agree: false,
       errors: {
-        name: null
+        name: null,
+        age: null
       }
     }
   },
@@ -108,6 +103,14 @@ export default {
         isValid = false
       } else {
         this.errors.name = null
+        isValid = true
+      }
+
+      if (this.age <= 18) {
+        this.errors.age = '18 yoshdan kattalar uchun'
+        isValid = false
+      } else {
+        this.errors.age = null
         isValid = true
       }
 
@@ -135,12 +138,12 @@ export default {
 </script>
 
 <style scoped>
-  .form-control small {
-    font-size: 18px;
-    color: red;
-  }
+.form-control small {
+  font-size: 18px;
+  color: red;
+}
 
-  .form-control.invalid input {
-    border-color: red;
-  }
+.form-control.invalid input {
+  border-color: red;
+}
 </style>

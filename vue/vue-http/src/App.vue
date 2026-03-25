@@ -1,16 +1,11 @@
 <template>
   <div class="container">
+    <AppAlert
+      :alert="alert"
+      @close="alert = null"
+    ></AppAlert>
     <form class="card" @submit.prevent="createPerson">
       <h1>Malumotlar Ombori bilan ishlash</h1>
-      <!-- <div class="form-control">
-        <label for="name">Ismingiz nima ?</label>
-        <input
-          type="text"
-          id="name"
-          placeholder="Ismingizni yozing"
-          v-model.trim="name"
-        />
-      </div> -->
       <AppInput
         type="text"
         label="Ismingiz nima ?"
@@ -34,13 +29,15 @@
 <script>
 import AppPeopleList from './AppPeopleList.vue'
 import AppInput from './AppInput.vue'
+import AppAlert from './AppAlert.vue'
 import axios from 'axios'
 
 export default {
   data() {
     return {
       name: '',
-      people: []
+      people: [],
+      alert: null
     }
   },
 
@@ -65,7 +62,6 @@ export default {
         )
 
         const data = await response.json()
-        console.log(data)
         this.people.unshift({
           id: data.name,
           firstName: this.name
@@ -84,8 +80,7 @@ export default {
         )
 
         if (!data) {
-          this.people = []
-          return
+          throw new Error('Foydalanuvchilar mavjud emas')
         }
 
         this.people = Object.keys(data).map((key) => {
@@ -95,40 +90,31 @@ export default {
           }
         })
       } catch (e) {
+        this.alert = {
+          type: 'danger',
+          title: 'Xato!',
+          text: e.message
+        }
         console.log('Error: ', e)
       }
-      // const dataPeople = response.data
-
-      // for (const key in dataPeople) {
-      //   console.log(dataPeople[key].firstName)
-      // }
     },
-    // async loadPeople() {
-    //   try {
-    //     const response = await fetch(
-    //       'https://vue-with-https-bab88-default-rtdb.firebaseio.com/people.json'
-    //     )
-    //     const data = await response.json()
-    //     for (const key in data) {
-    //       this.people.push(data[key].firstName)
-    //     }
-    //   } catch (e) {
-    //     console.log('Error:', e)
-    //   }
-    // }
     async removePerson(id) {
+      this.people = this.people.filter((person) => person.id !== id)
       await axios.delete(
         `https://vue-with-https-bab88-default-rtdb.firebaseio.com/people/${id}.json`
       )
-      // const index = this.people.indexOf(person => person.id === id)
-      // this.people.splice(index, 1)
-      this.people = this.people.filter((person) => person.id !== id)
+      this.alert = {
+        type: 'primary',
+        title: 'Qoniqarli!',
+        text: 'Foydalanuvchi o\'chirildi'
+      }
     }
   },
 
   components: {
     AppPeopleList,
-    AppInput
+    AppInput,
+    AppAlert
   }
 }
 </script>

@@ -25,6 +25,24 @@ body {
   gap: 10px;
 }
 
+
+.alert {
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px;
+  width: 50%;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.alert.danger {
+  border-left: 10px solid red;
+}
+
+.alert.primary {
+  border-left: 10px solid #06d6a0;
+}
+
 .card.center {
   align-items: center;
 }

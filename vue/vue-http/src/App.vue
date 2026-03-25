@@ -2,20 +2,25 @@
   <div class="container">
     <form class="card" @submit.prevent="createPerson">
       <h1>Malumotlar Ombori bilan ishlash</h1>
-      <div class="form-control">
+      <!-- <div class="form-control">
         <label for="name">Ismingiz nima ?</label>
         <input
           type="text"
           id="name"
           placeholder="Ismingizni yozing"
           v-model.trim="name"
-        >
-      </div>
-      <button
-        class="btn"
-        type="submit"
-        :disabled="name.length === 0"
-      >Yuborish</button>
+        />
+      </div> -->
+      <AppInput
+        type="text"
+        label="Ismingiz nima ?"
+        placeholder="Ismingizni yozing"
+        v-model.trim="name"
+      >
+      </AppInput>
+      <button class="btn" type="submit" :disabled="name.length === 0">
+        Yuborish
+      </button>
     </form>
 
     <AppPeopleList
@@ -28,6 +33,7 @@
 
 <script>
 import AppPeopleList from './AppPeopleList.vue'
+import AppInput from './AppInput.vue'
 import axios from 'axios'
 
 export default {
@@ -73,14 +79,16 @@ export default {
 
     async loadPeople() {
       try {
-        const { data } = await axios.get('https://vue-with-https-bab88-default-rtdb.firebaseio.com/people.json')
+        const { data } = await axios.get(
+          'https://vue-with-https-bab88-default-rtdb.firebaseio.com/people.json'
+        )
 
         if (!data) {
           this.people = []
           return
         }
 
-        this.people = Object.keys(data).map(key => {
+        this.people = Object.keys(data).map((key) => {
           return {
             id: key,
             firstName: data[key].firstName
@@ -109,15 +117,18 @@ export default {
     //   }
     // }
     async removePerson(id) {
-      await axios.delete(`https://vue-with-https-bab88-default-rtdb.firebaseio.com/people/${id}.json`)
+      await axios.delete(
+        `https://vue-with-https-bab88-default-rtdb.firebaseio.com/people/${id}.json`
+      )
       // const index = this.people.indexOf(person => person.id === id)
       // this.people.splice(index, 1)
-      this.people = this.people.filter(person => person.id !== id)
+      this.people = this.people.filter((person) => person.id !== id)
     }
   },
 
   components: {
-    AppPeopleList
+    AppPeopleList,
+    AppInput
   }
 }
 </script>

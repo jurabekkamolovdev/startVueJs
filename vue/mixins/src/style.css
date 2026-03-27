@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1b263b;
+  font-family: sans-serif; /* qo'shildi */
+}
+
+.container {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px 0; /* qo'shildi */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card.center {
+  align-items: center;
+}
+
+.card.row {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert {
+  background-color: white;
+  /* border-radius: 15px; */
+  padding: 10px;
+  width: 50%;
+  margin: 0 auto;
+  display: flex; /* align-items ishlashi uchun */
+  flex-direction: column;
+  gap: 12px;
+}
+
+.alert.danger {
+  border-left: 10px solid red;
+}
+
+.alert.primary {
+  border-left: 10px solid #06d6a0;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-control label {
+  color: #0d1b2a;
+  font-size: 20px;
+}
+
+.form-control input {
+  padding: 5px;
+  border: 1px solid #0d1b2a;
+  font-size: 20px;
+  color: #0d1b2a;
+}
+
+.form-control input:focus {
+  border: 1px solid #06d6a0;
+  outline: none;
+}
+
+.btn {
+  width: 200px;
+  padding: 10px;
+  background-color: #40916c;
+  border: 1px solid #40916c;
+  color: white;
+  border-radius: 50px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn:disabled {
+  background-color: #ced4da;
+  border: 1px solid #e9ecef;
+  color: #adb5bd;
+  cursor: not-allowed; /* qo'shildi */
+}
+
+.btn.danger {
+  background-color: #c1121f;
+  border: 1px solid #c1121f;
+}
